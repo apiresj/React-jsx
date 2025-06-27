@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="stylesheet" href="./styles/PaginaDeLogin.css" />
+    <link rel="stylesheet" href="./styles/CampoDeDigitacao.css" />
+    <title>Login | CodeConnect</title>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.27.6/babel.min.js"></script>
+
+    <script type="text/babel">
+        function Titulo({children}) {
+            return (
+                <h1 className='form__titulo'>{children}</h1>
+            );
+        }
+        
+        function SubTitulo({children}){
+            return (
+                <h2 className='form__texto'>{children}</h2>
+            )
+        }
+
+        function CampoDeDigitacao({label, tipo, placeholder, value, setValor, id}) {
+            return (
+                <div className='form__campo-digitacao'>
+                    <label htmlFor={id}>{label}</label>
+                    <input 
+                        type={tipo} 
+                        id={id} 
+                        placeholder={placeholder} 
+                        value={value}
+                        onChange={(evento) => setValor(evento.target.value)}
+                        required
+                    />
+                </div>
+            )
+        }
+
+        function Botao({tipo, children}){
+            return(
+                <button type={tipo} className='form__botao'>{children}</button>
+            )
+        } 
+
+        function CheckBox() {
+            return (
+                <>
+                    <div className = 'form__campo-checkbox'>
+                        <input type="checkbox" id='lembrar'/>
+                        <label htmlFor="lembrar" />
+                    </div>
+                    <p className='form__opcoes-texto'>Lembrar-me</p>
+                </>
+            )
+        }
+
+        function Texto({ classe, children }) {
+            return (
+                <p className={classe}>{children}</p>
+            )
+        }
+        function ItemRedesSociais({ link, nome }) {
+            return (
+                <li >
+                    <a href="link">
+                        <img src={`./img/${nome}.svg`} alt="imagem de rede social"/>
+                        {nome}
+                    </a>
+
+                </li>
+            )
+        }
+
+        function Link({children}) {
+            return (
+                <a href="#" className='container-links__link'>{children}</a>
+            )
+        }
+
+        function PaginaDeLogin(){
+            const [email, setEmail] = React.useState('');
+            const [senha, setSenha] = React.useState('');
+
+            const hundleSubmit = (e) => {
+                e.preventDefault();
+                console.log(`email` + email);
+                console.log('senha' + senha);
+            }
+
+            return (
+                <div className='container-login'>
+                    <img src="./img/imagem-login.png" alt="imagem de login" />
+                    <section>
+                        <form onSubmit={hundleSubmit}>
+                            <Titulo>Login</Titulo> 
+                            <SubTitulo>Boas-vindas! Faça seu login.</SubTitulo>
+                            <CampoDeDigitacao
+                                label='E-mail ou usuário'
+                                tipo='email'
+                                id='email'
+                                placeholder='Email ou usuário'
+                                value={email}
+                                setValor={setEmail}
+                            />
+                            <CampoDeDigitacao 
+                                label='Senha' 
+                                tipo='password' 
+                                id='senha'
+                                placeholder='Escreva sua senha'
+                                value = {senha}
+                                setValor = {setSenha}
+                            />
+
+                            <fieldset className='form__opcoes'>
+                                <CheckBox />
+                                <p>
+                                    <a href="#" aria-label='Recuperar senha esquecida'>Esqueci a senha</a>
+                                </p>
+                            </fieldset>
+                            
+                            <Botao tipo='submit'>Login</Botao>
+
+                        </form>
+
+                        <div className='container-links'>
+
+                            <Texto classe='container-links__titulo'>ou entre com outras contas</ Texto>
+                            
+                            <ul>
+                                <ItemRedesSociais 
+                                link='https://www.github.com/apiresj'
+                                nome='github'
+                                />
+                                <ItemRedesSociais 
+                                link='https://www.google.com'
+                                nome='Google'
+                                />
+                            </ul>
+
+                            <Texto classe='container-links__texto'>Ainda não tem conta?</Texto>
+                            <Link>Crie seu cadastro!</Link>
+                            
+                        </div>
+                        
+
+                    </section>
+                </div>
+            )
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<PaginaDeLogin />);
+    </script>
+</body>
+</html>
